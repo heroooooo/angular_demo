@@ -1,0 +1,8 @@
+
+<p>post-issue works!</p>
+
+<ckeditor [(ngModel)]="content" [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
+<br>
+{{content}}
+<br>
+<button nz-button nzType="primary" (click)="submit()" >Primary</button>
