@@ -8,12 +8,11 @@ import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthenticatorModule} from './authenticator/authenticator.module';
 import {HomeModule} from './pages/home/home.module';
-import {UserService} from './service/UserService';
-import {JwtService} from './service';
-import {TokenExpiredErrorHandler} from './interceptor/TokenExpiredErrorHandler';
+import {HttpTokenInterceptor} from './interceptor';
+import {Ainterceptor} from './interceptor/ainterceptor';
 
 registerLocaleData(en);
 
@@ -31,7 +30,10 @@ registerLocaleData(en);
     AuthenticatorModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US },
-    {provide: ErrorHandler, useClass: TokenExpiredErrorHandler}],
+    {provide: HTTP_INTERCEPTORS, useClass: Ainterceptor , multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor , multi: true}
+    // {provide: ErrorHandler, useClass: TokenExpiredErrorHandler}
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule  {}
